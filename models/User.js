@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -37,5 +38,11 @@ userSchema.pre('save', async function(){
 })
 
 
+// * Mongoose methods
+// we signed the jwt using mongose methods instead of signing in the controller cuz if we sign the jwt inside controller, then we will have to sign the jwt again if we update the user
+// but if we sign the jwt in the mongoose methods, then we can just call this method to sign the jwt anywhere in the application 
+userSchema.methods.createJWT = function(){
+    return jwt.sign({userId:this._id,name:this.name}, process.env.JWT_SECRET, {expiresIn:'30d',})
+}
 
 module.exports = mongoose.model('User', userSchema);
