@@ -27,7 +27,7 @@ const authenticationMiddleware = async (req, res, next) =>{
         // since we passed userid and name while signing the token in the user model, we can access those properties from the payload object now
 
         req.user = {userId:payload.userId, name:payload.name};
-        // User's data is saved in the request object so that we can use it in the routes and we can use it to check if the user is authorized to perform a particular action(resource) or not which minimized the hassle of searching the database again and again for the user's data.
+        // User's data is saved in the request object so that we can use it in the routes and we can use it to check if the user is authorized to perform a particular action(resource) or not which minimizes the hassle of searching the database again and again for the user's data.
         next();
         // next() is used to move to the next middleware or route handler function 
 
