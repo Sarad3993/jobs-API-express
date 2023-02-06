@@ -25,7 +25,7 @@ const jobsSchema = new mongoose.Schema({
         required: [true, "Please provide user"]
     }
 
-},{timestapms:true});
+},{timestamps:true});
 // timestamps will add createdAt and updatedAt fields to the schema and will automatically update the updatedAt field whenever the document is updated
 
 

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const {UnauthenticatedError} = require('../errors');
 
 const authenticationMiddleware = async (req, res, next) =>{
-    // check header 
+    // check header
     const authHeader = req.headers.authorization;
     // * basically here we are requesting for the token from the header of the request
     // user should send the token in the header of the request in the format of Bearer <token> every time he/she makes a request to the server
@@ -36,4 +36,6 @@ const authenticationMiddleware = async (req, res, next) =>{
     }
 }
 
+
 module.exports = authenticationMiddleware;
+
