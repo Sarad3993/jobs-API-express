@@ -38,13 +38,35 @@ const createJob = async (req, res) => {
 
 
 const updateJob = async (req, res) => {
-  res.send("update job");
+  const {body:{company, position},user:{userId}, params:{id:jobId}} = req
+
+  if(company === '' || position === ''){
+    throw new BadRequestError('Company and position fields cannot be empty');
+  }
+  const job  = await Job.findOneAndUpdate({_id:jobId, createdBy:userId}, req.body, {new:true, runValidators:true})
+  // findOneAndUpdate() --> finds the job with the given id and updates it with the data sent by the user in the request body i.e req.body and returns the updated job.
+  // new: true --> returns the updated job
+  // runValidators: true --> runs the validators on the updated job
+  if(!job){
+    throw new NotFoundError (`No job found with the id ${jobId}`);
+  }
+  res.status(StatusCodes.OK).json({job});
+
 };
 
 
 const deleteJob = async (req, res) => {
-  res.send("delete job");
+  const {user: { userId },params: { id: jobId }} = req;
+
+  const job = await Job.findOneAndRemove({_id:jobId, createdBy:userId})
+
+  if(!job){
+    throw new NotFoundError(`No job found with the id ${jobId}`);
+  }
+  res.status(StatusCodes.OK);
+  // no need to send any data in the response body as we are deleting the job.
 };
+
 
 
 module.exports = { getAllJobs, getJob, createJob, updateJob, deleteJob };
