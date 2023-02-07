@@ -46,7 +46,7 @@ const updateJob = async (req, res) => {
   const job  = await Job.findOneAndUpdate({_id:jobId, createdBy:userId}, req.body, {new:true, runValidators:true})
   // findOneAndUpdate() --> finds the job with the given id and updates it with the data sent by the user in the request body i.e req.body and returns the updated job.
   // new: true --> returns the updated job
-  // runValidators: true --> runs the validators on the updated job
+  // runValidators: true --> runs the mongoose validators on the updated job
   if(!job){
     throw new NotFoundError (`No job found with the id ${jobId}`);
   }
