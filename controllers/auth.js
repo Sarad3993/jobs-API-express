@@ -4,9 +4,11 @@ const { BadRequestError, UnauthenticatedError } = require("../errors");
 
 const register = async (req, res) => {
   const user = await User.create({ ...req.body });
-  // * spread operator (...) is used to spread the properties of req.body into a new object, allowing each property to be passed as a separate argument to User.create() method.
+  // * spread operator (...) is used to spread the properties of req.body into a new object(user), allowing each property to be passed as a separate argument to User.create() method. So spread operator is used to pass objects as arguments to a function.
   // Since we are using the method of User model i.e  createJWT() so we need to use ... spread operator to spread the properties of req.body into a new object and pass that new object to User.create() method. 
   //If we do not use spread operator, the user will be created in the database. But the password will not be hashed.
+  //* we passed evth into ...req.body so that mongoose will handle all the errors related to validation of the data sent by the user in the request body. If we do not do so then we will have to handle the error manually like we did in login below. 
+
   const token = user.createJWT();
   // createJWT() is a method defined in the User model. here we just invoked it for the user we just created.
 
