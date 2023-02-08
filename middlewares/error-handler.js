@@ -11,6 +11,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   };
 
   // * Mongoose Error Handling (Duplicate Value Entered)
+  // * Duplicate Value Entered --> is the error that is thrown by mongoose when the data sent by the user in the request body is already present in the database.
   if (err.code && err.code === 11000) {
     customError.msg = `Duplicate value entered for ${Object.keys(
       err.keyValue
@@ -25,6 +26,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 
 
   // * Mongoose Error Handling (Validation Error)
+  // * Validation Error --> is the error that is thrown by mongoose when the data sent by the user in the request body does not match the validation rules defined in the model.
   if (err.name === "ValidationError") {
     customError.msg = Object.values(err.errors)
       .map((item) => item.message)
@@ -37,8 +39,8 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     // * join() --> is used to join the array items with a comma.
   }
 
-
     // * Mongoose Error Handling (Cast Error)
+    // * Cast Error --> is the error that is thrown by mongoose when the id sent by the user in the request params does not match the id of the item in the database.
     if (err.name === "CastError"){
       customError.msg = `No item found with id ${err.value}`;
       customError.statusCode = StatusCodes.NOT_FOUND;
@@ -47,7 +49,8 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 
 
   return res.status(customError.statusCode).json({ msg: customError.msg });
-  // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({err});
+  // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({err}); 
+  // uncomment this to check the mongoose error in detailed format 
 
 };
 
