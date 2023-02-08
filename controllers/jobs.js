@@ -61,9 +61,9 @@ const deleteJob = async (req, res) => {
   const job = await Job.findOneAndRemove({_id:jobId, createdBy:userId})
 
   if(!job){
-    throw new NotFoundError(`No job found with the id ${jobId}`);
+    throw new NotFoundError(`No job with id ${jobId}`);
   }
-  res.status(StatusCodes.OK);
+  res.status(StatusCodes.OK).send();
   // no need to send any data in the response body as we are deleting the job.
 };
 
