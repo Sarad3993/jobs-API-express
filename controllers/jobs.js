@@ -21,7 +21,7 @@ const getJob = async (req, res) => {
 
     const job = await Job.findOne({_id:jobId, createdBy:userId})
     if(!job){
-        throw new NotFOundError(`No job found with the id ${jobId}`);
+        throw new NotFoundError(`No job found with the id ${jobId}`);
     }
     res.status(StatusCodes.OK).json({job});
     // 200 --> OK
